@@ -1,8 +1,10 @@
-const express=require("express");
-const {get,put,post,del}=require("../controllers/Controllers");
 
+const express=require("express");
+const {registerUser,loginUser}=require("../controllers/Controllers");
 const router=express.Router();
 
-router.route("/").get(get).post(post).put(put).delete(del);
-   
-module.exports=router;
+
+router.route("/register").post(registerUser);
+router.route("/login").post(loginUser);
+
+module.exports=router

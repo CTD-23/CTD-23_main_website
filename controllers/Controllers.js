@@ -1,23 +1,50 @@
-const get=(req,res)=>{
+const asyncHandler=require("express-async-handler");
+const ErrorHandler=require("../utils/errorHandler");
+const sendToken=require("../utils/sendJWTtoken");
+const User = require('../models/userModel');
 
-    res.status(200).json({message:"get"});
 
-};
+//registe
+const registerUser=asyncHandler(async(req, res,next) => {
+    const {email,first_name,last_name,password,Username,isJunior,reg_id}=req.body;
 
-const post=(req,res)=>{
+    if(!email||!first_name||!last_name||!password||!Username||!isJunior||!reg_id){
+        return next(new ErrorHandler("All fields are manditory",400));
+    }
 
-    res.status(201).json({message:"post "});
+    const user=await User.create({
+        email,first_name,last_name,password,Username,isJunior,reg_id
+    });
 
-};
-const put=(req,res)=>{
+    sendToken(user,201,res);
+});
 
-    res.status(200).json({message:"update"});
 
-};
-const del=(req,res)=>{
+//login
+const loginUser=asyncHandler(async(req,res,next)=>{
 
-    res.status(200).json({message:"to delete"});
+    const {Username,password}=req.body;
+    if(!Username||!password){
+        return next(new ErrorHandler("All fields are manditory",400));
+    }
+    const user =await User.findOne ({   Username     }).select("+password");
 
-};
+    if(!user){
+        return next(new ErrorHandler("Invalid Username or Password",400));
+    }
 
-module.exports={get,post,put,del};
+    const pass_match = await user.compare(password);
+
+    if(!pass_match){
+        return next(new ErrorHandler("Invalid Username or Password",400));
+    }
+    
+    sendToken(user,201,res);
+});
+
+
+
+
+
+module.exports={registerUser , loginUser}
+

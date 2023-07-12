@@ -1,21 +1,15 @@
 const express = require('express');
 const app = express();
-//Port
 
-// /*const start = async () => {
-//     try{
-//         app.listen(PORT , function(){
-//        console.log( `connected at ${PORT} Master port `);
-       
+//const contacts=require("./routes/contactRoutes");
 
-//         });
-//     }
-//     catch(err){
-//         console.log(err);
-//     }
-// };*/
-const contacts=require("./routes/contactRoutes");
-app.use("/api/v1",contacts)
+app.use(express.json());
+
+
+app.use("/api",require("./routes/contactRoutes"));
+// // app.get('/', function(req, res) {
+//     res.send('<p>hello ayush and shreya </p>');
+// })
 
 module.exports=app;
 
