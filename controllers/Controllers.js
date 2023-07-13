@@ -1,10 +1,10 @@
-const asyncHandler=require("express-async-handler");
-const ErrorHandler=require("../utils/errorHandler");
-const sendToken=require("../utils/sendJWTtoken");
+const asyncHandler = require("express-async-handler");
+const ErrorHandler = require("../utils/errorHandler");
+const sendToken = require("../utils/sendJWTtoken");
 const User = require('../models/userModel');
+const sendEmail = require('../utils/sendEmail');
 
-
-//registe
+//register
 const registerUser=asyncHandler(async(req, res,next) => {
     const {email,first_name,last_name,password,Username,isJunior,reg_id}=req.body;
 
@@ -18,8 +18,7 @@ const registerUser=asyncHandler(async(req, res,next) => {
 
     sendToken(user,201,res);
 });
-
-
+                                                                                                                      
 //login
 const loginUser=asyncHandler(async(req,res,next)=>{
 
@@ -42,9 +41,68 @@ const loginUser=asyncHandler(async(req,res,next)=>{
     sendToken(user,201,res);
 });
 
+//logout
+const logoutUser = asyncHandler(async(req,res,next)=>{
+
+     res.cookie("token",null,{
+        expires:new Date(Date.now()),
+        httpOnly:true,
+    });
+    
+    res.status(200).json({
+        success:true,
+        message:"Logged out",
+    });
+    
+});
+
+//forget password
+const forgetPassword = asyncHandler(async(req,res,next)=>{
+    const user = await User.findOne({email:req.body.email});
+    
+    if(!user){
+        return next(new ErrorHandler("User not found ",404));
+    }
+
+    const resetToken = user.getResetToken();
+
+    await user.save({validateBeforeSave:false});
+
+    const resetPasswordUrl =`${req.protocol}://${req.get("host")}/api/password/reset/${resetToken}`;
+
+    const message=`your reset password token is \n\n ${resetPasswordUrl} \n\n if not requested ignore `;
+
+    
+    try{
+        await sendEmail({email:user.email , subject:`CTD PASSWORD RECOVERY` , message , });
+        res.status(200).json({
+            success:true,
+            message:`Email sent to ${user.email}`,
+        });
+    }  
+    catch(error){
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpired = undefined;
+ 
+        await user.save({validateBeforeSave:false});
+    
+        return next(new ErrorHandler(error.message,500));       
+    }
+    
+
+});
+
+
+
+// //reset password
+//const resetPassword=asyncHandler(async(req,res,next)=>{
+       
+    
+//});
+
+module.exports={registerUser , loginUser,logoutUser,forgetPassword}
 
 
 
 
-module.exports={registerUser , loginUser}
 
