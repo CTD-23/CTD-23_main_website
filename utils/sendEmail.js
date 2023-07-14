@@ -8,15 +8,15 @@ const sendEmail=async(options)=>{
     const transporter = nodemailer.createTransport({
         host: 'smtp.ethereal.email',
         port: 587,
-            auth: {
-                user: 'brain.hilpert@ethereal.email',
-                pass: 'v1FDYJUXHKujAMMDGE'
-            }
+        auth: {
+            user: 'elias90@ethereal.email',
+            pass: 'GQd9gbUEXuxFUq4ATG'
+        }
      });
  
      const mailOptions= {
          
-        from :'brain.hilpert@ethereal.email',
+        from :'elias90@ethereal.email',
         to:options.email,
         subject:options.subject,
         text:options.message,

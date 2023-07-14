@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/sendJWTtoken");
 const User = require('../models/userModel');
+const crypto=require("crypto");
 const sendEmail = require('../utils/sendEmail');
 
 //register
@@ -59,7 +60,7 @@ const logoutUser = asyncHandler(async(req,res,next)=>{
 //forget password
 const forgetPassword = asyncHandler(async(req,res,next)=>{
     const user = await User.findOne({email:req.body.email});
-    
+         
     if(!user){
         return next(new ErrorHandler("User not found ",404));
     }
@@ -95,14 +96,41 @@ const forgetPassword = asyncHandler(async(req,res,next)=>{
 
 
 // //reset password
-//const resetPassword=asyncHandler(async(req,res,next)=>{
-       
-    
-//});
+const resetPassword=asyncHandler(async(req,res,next)=>{
 
-module.exports={registerUser , loginUser,logoutUser,forgetPassword}
+    //creating token hash
+    const resetPasswordToken=crypto
+     .createHash("sha256")
+     .update(req.params.token)
+     .digest("hex");
+
+     const user=await User.findOne({
+        resetPasswordToken,
+        resetPasswordExpire:{$gt:Date.now()},
+     });
+
+     if(!user){
+        return next(new ErrorHandler("Reset Password Token is invalid or has been expired",404));
+    }
+
+    if(req.body.password!==req.body.confirmPassword){
+        return next(new ErrorHandler("Password and confirm Password dont match",404));
+    }
+
+    user.password=req.body.password;
+    user.resetPasswordToken=undefined;
+    user.resetPasswordExpire=undefined;
+
+    await user.save();
+
+    sendToken(user,200,res);
+
+});
+
+
+module.exports={registerUser , loginUser,logoutUser,forgetPassword,resetPassword}
 
 
 
 
-
+//"password" : "Giyaan@66",

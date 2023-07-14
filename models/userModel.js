@@ -87,14 +87,14 @@ userSchema.methods.getJWTtoken=function(){
 
 //Compare Password
 userSchema.methods.compare= async function(enteredPassword){
-    return await bcrypt.compare(enteredPassword,this.password)
+    return await bcrypt.compare(enteredPassword,this.password);
 
 };
 
 //generating password reset token
 userSchema.methods.getResetToken=function(){
-    const resetToken=crypto.randomBytes(10).toString("hex");
-
+    const resetToken=crypto.randomBytes(20).toString("hex");
+    
     //hashing and adding to user schema
     
     this.resetPasswordToken=crypto.createHash("sha256").update(resetToken).digest("hex");
@@ -108,3 +108,11 @@ userSchema.methods.getResetToken=function(){
 module.exports=mongoose.model("User",userSchema);
 
 
+// "first_name": "gaygian",
+//         "last_name": "gayer",
+//         "email": "giyan@gmail.com",
+//         "Username": "Username",
+//         "password": "$2a$10$gxZQDy3KM6rMRSxhwJUNeuJktAaAyEKA2/IeNHvXSQdZlyj4m6EA6",
+//         "reg_id": "ASDFGHJKLAS",
+//         "isJunior": true,
+//         "_id": "64b043c0f2213bd0a2c912da",
