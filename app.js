@@ -5,11 +5,9 @@ const app = express();
 
 app.use(express.json());
 
-
+//routing
 app.use("/api",require("./routes/contactRoutes"));
-// // app.get('/', function(req, res) {
-//     res.send('<p>hello ayush and shreya </p>');
-// })
+app.use("/api",require("./routes/eventRoutes"));
 
 module.exports=app;
 
