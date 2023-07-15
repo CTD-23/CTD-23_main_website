@@ -7,7 +7,7 @@ app.use(express.json());
 
 //routing
 app.use("/api",require("./routes/contactRoutes"));
-app.use("/api",require("./routes/eventRoutes"));
+app.use("/api",require("./routes/generalRoutes"));
 
 module.exports=app;
 

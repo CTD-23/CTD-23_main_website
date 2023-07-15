@@ -6,6 +6,6 @@ module.exports=(err,req,res,next)=>{
 
     res.status(err.statusCode).json({
         success:false,
-        errror:err.stack   //will return stack trace
+        errror:err.message  //will return stack trace
     });
 };
