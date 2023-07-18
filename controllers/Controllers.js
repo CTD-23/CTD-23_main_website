@@ -5,6 +5,7 @@ const User = require('../models/userModel');
 const crypto=require("crypto");
 const sendEmail = require('../utils/sendEmail');
 
+
 //register
 const registerUser=asyncHandler(async(req, res,next) => {
     const {email,first_name,last_name,password,Username,isJunior,reg_id}=req.body;
@@ -78,6 +79,7 @@ const forgetPassword = asyncHandler(async(req,res,next)=>{
         await sendEmail({email:user.email , subject:`CTD PASSWORD RECOVERY` , message , });
         res.status(200).json({
             success:true,
+
             message:`Email sent to ${user.email}`,
         });
     }  
