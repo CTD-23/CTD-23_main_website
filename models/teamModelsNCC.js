@@ -1,6 +1,6 @@
 const mongoose=require("mongoose");
 
-const teamRCSchema=new mongoose.Schema({
+const teamNCCSchema=new mongoose.Schema({
 
     team_name:{
         type:String,
@@ -16,10 +16,10 @@ const teamRCSchema=new mongoose.Schema({
         type:String,       
         required:false
     },
+    
 
-    isRC:{
+    isNCC:{
         type:Boolean,
-        
         default:false
     },
 
@@ -31,5 +31,4 @@ const teamRCSchema=new mongoose.Schema({
 
 });
 
-module.exports=mongoose.model("TeamRC",teamRCSchema);
-
+module.exports=mongoose.model("TeamNCC",teamNCCSchema);

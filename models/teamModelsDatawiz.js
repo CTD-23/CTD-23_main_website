@@ -1,6 +1,6 @@
 const mongoose=require("mongoose");
 
-const teamRCSchema=new mongoose.Schema({
+const teamDwizSchema=new mongoose.Schema({
 
     team_name:{
         type:String,
@@ -16,12 +16,12 @@ const teamRCSchema=new mongoose.Schema({
         type:String,       
         required:false
     },
-
-    isRC:{
-        type:Boolean,
-        
+    
+    isDatawiz:{
+        type:Boolean,       
         default:false
     },
+
 
     username1:String,
     username2:String,
@@ -31,5 +31,5 @@ const teamRCSchema=new mongoose.Schema({
 
 });
 
-module.exports=mongoose.model("TeamRC",teamRCSchema);
+module.exports=mongoose.model("TeamDwiz",teamDwizSchema);
 
