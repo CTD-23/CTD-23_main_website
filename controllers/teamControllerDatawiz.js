@@ -56,8 +56,7 @@ const registerTeamDatawiz=asyncHandler(async(req,res,next)=>{
             password2:password2,
         });
     }
-
-       
+      
     
 // if user register for events other than Datawiz !:) 
 
