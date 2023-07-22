@@ -11,6 +11,10 @@ const registerTeamDatawiz=asyncHandler(async(req,res,next)=>{
     let newTeam;
   
     const {email1,email2,team_name}=req.body;
+
+    if(!email1||!email2||!team_name){
+        return next(new ErrorHandler("All fields are manditory",400));
+    }
     
     const user1=await User.findOne({email:req.body.email1});
     const user2=await User.findOne({email:req.body.email2});
@@ -24,7 +28,7 @@ const registerTeamDatawiz=asyncHandler(async(req,res,next)=>{
 
     //email1&&email2
      if(user1.email==user2.email){
-        return next(new ErrorHandler("BOTH USER CAN'T HAVE SAME EMAIL"));
+        return next(new ErrorHandler("BOTH USER CAN'T HAVE SAME EMAIL",400));
     }
     
     // check if the team is build 
@@ -82,10 +86,10 @@ const registerTeamDatawiz=asyncHandler(async(req,res,next)=>{
 
     //SENDING MAIL TO USER 1!!!!!!
        
-    const message1=`ur login credentials are username:${username1} & password:${password1}`;
+    let message=`ur login credentials are username:${username1} & password:${password1}`;
 
     try{
-        await sendEmail({email:req.body.email1, subject:`Credentials for Datawiz` , message1, });
+        await sendEmail({email:req.body.email1, subject:`Credentials for Datawiz` , message, });
     }  
     catch(error){
         team_user1.username1 = undefined;
@@ -98,10 +102,10 @@ const registerTeamDatawiz=asyncHandler(async(req,res,next)=>{
 
     //SENDING MAIL TO USER 2
 
-    const message2=`ur login credentials are username:${username2} & password:${password2}`;
+     message=`ur login credentials are username:${username2} & password:${password2}`;
 
     try{
-        await sendEmail({email:req.body.email2, subject:`Credentials for NCC` , message2, });
+        await sendEmail({email:req.body.email2, subject:`Credentials for NCC` , message, });
 
     }  
     catch(error){

@@ -6,17 +6,17 @@ const sendEmail=async(options)=>{
     //connect to the SMTP
    
     const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
+        host: 'smtp-relay.brevo.com',
         port: 587,
         auth: {
-            user: 'elias90@ethereal.email',
-            pass: 'GQd9gbUEXuxFUq4ATG'
+            user: 'mailpostg1010@gmail.com',
+            pass: 'IDR8UNOgGYFQv56y'
         }
      });
  
      const mailOptions= {
          
-        from :'elias90@ethereal.email',
+        from :'mailpostg1010@gmail.com',
         to:options.email,
         subject:options.subject,
         text:options.message,

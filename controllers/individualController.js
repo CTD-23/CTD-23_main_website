@@ -52,10 +52,10 @@ const registerIndiRC=asyncHandler(async(req,res,next)=>{
 
     //SENDING MAIL TO USER!!!!!!
        
-    const message1=`ur login credentials are username:${username1} & password:${password1}`;
+    const message=`ur login credentials are username:${username1} & password:${password1}`;
 
     try{
-        await sendEmail({email:req.body.email1, subject:`Credentials for RC` , message1, });
+        await sendEmail({email:req.body.email1, subject:`Credentials for RC` , message, });
     }  
     catch(error){
         team_user1.username1 = undefined;
@@ -125,10 +125,10 @@ const registerIndiNCC=asyncHandler(async(req,res,next)=>{
 
     //SENDING MAIL TO USER!!!!!!
        
-    const message1=`ur login credentials are username:${username1} & password:${password1}`;
+    const message=`ur login credentials are username:${username1} & password:${password1}`;
 
     try{
-        await sendEmail({email:req.body.email1, subject:`Credentials for NCC` , message1, });
+        await sendEmail({email:req.body.email1, subject:`Credentials for NCC` , message, });
     }  
     catch(error){
         team_user1.username1 = undefined;
@@ -200,10 +200,10 @@ const registerIndiDatawiz=asyncHandler(async(req,res,next)=>{
 
     //SENDING MAIL TO USER!!!!!!
        
-    const message1=`ur login credentials are username:${username1} & password:${password1}`;
+    const message=`ur login credentials are username:${username1} & password:${password1}`;
 
     try{
-        await sendEmail({email:req.body.email1, subject:`Credentials for Datawiz` , message1, });
+        await sendEmail({email:req.body.email1, subject:`Credentials for Datawiz` , message, });
     }  
     catch(error){
         team_user1.username1 = undefined;
