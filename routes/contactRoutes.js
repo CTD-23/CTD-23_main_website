@@ -4,8 +4,12 @@ const {registerTeamRC}=require("../controllers/teamControllerRC");
 const {registerTeamNCC} = require("../controllers/teamControllerNCC");
 const {registerTeamDatawiz}=require("../controllers/teamControllerDatawiz");
 
+
 const {registerIndiRC,registerIndiDatawiz,registerIndiNCC}=require("../controllers/individualController");
 const {registerUser,loginUser,logoutUser,forgetPassword,resetPassword}=require("../controllers/Controllers");
+
+const {isAuthenticatedUser}=require("../middlewares/auth");
+
 const router=express.Router();
 
 //register user:@desc:public
@@ -16,12 +20,12 @@ router.route("/password/forget").post(forgetPassword);
 router.route("/password/reset/:token").put(resetPassword);
 
 //register teams @desc:private
-router.route("/register/team/RC").post(registerTeamRC);
-router.route("/register/team/NCC").post(registerTeamNCC);
-router.route("/register/team/Datawiz").post(registerTeamDatawiz);
-router.route("/register/indi/RC").post(registerIndiRC);
-router.route("/register/indi/NCC").post(registerIndiNCC);
-router.route("/register/indi/Datawiz").post(registerIndiDatawiz);
+router.route("/register/team/RC").post(isAuthenticatedUser,registerTeamRC);
+router.route("/register/team/NCC").post(isAuthenticatedUser,registerTeamNCC);
+router.route("/register/team/Datawiz").post(isAuthenticatedUser,registerTeamDatawiz);
+router.route("/register/indi/RC").post(isAuthenticatedUser,registerIndiRC);
+router.route("/register/indi/NCC").post(isAuthenticatedUser,registerIndiNCC);
+router.route("/register/indi/Datawiz").post(isAuthenticatedUser,registerIndiDatawiz);
 
 
 module.exports=router;

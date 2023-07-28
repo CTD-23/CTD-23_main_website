@@ -52,7 +52,10 @@ const registerIndiRC=asyncHandler(async(req,res,next)=>{
 
     //SENDING MAIL TO USER!!!!!!
        
-    const message=`ur login credentials are username:${username1} & password:${password1}`;
+    const message=`Greetings from PICT IEEE Student Branch\n
+    Thank you for registering in RC\n\n
+    Your login credentials for RC is username:${username1} & password:${password1}\n
+    In case of any technical difficulties or questions reach out to us through`;
 
     try{
         await sendEmail({email:req.body.email1, subject:`Credentials for RC` , message, });
@@ -125,7 +128,10 @@ const registerIndiNCC=asyncHandler(async(req,res,next)=>{
 
     //SENDING MAIL TO USER!!!!!!
        
-    const message=`ur login credentials are username:${username1} & password:${password1}`;
+    const message=`Greetings from PICT IEEE Student Branch\n
+    Thank you for registering in NCC\n\n
+    Your login credentials for NCC is username:${username1} & password:${password1}\n
+    In case of any technical difficulties or questions reach out to us through`;
 
     try{
         await sendEmail({email:req.body.email1, subject:`Credentials for NCC` , message, });
@@ -200,7 +206,10 @@ const registerIndiDatawiz=asyncHandler(async(req,res,next)=>{
 
     //SENDING MAIL TO USER!!!!!!
        
-    const message=`ur login credentials are username:${username1} & password:${password1}`;
+    const message=`Greetings from PICT IEEE Student Branch\n
+    Thank you for registering in Datawiz\n\n
+    Your login credentials for Datawiz is username:${username1} & password:${password1}\n
+    In case of any technical difficulties or questions reach out to us through`;
 
     try{
         await sendEmail({email:req.body.email1, subject:`Credentials for Datawiz` , message, });
