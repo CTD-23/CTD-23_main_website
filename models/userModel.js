@@ -8,15 +8,15 @@ const userSchema = new mongoose.Schema({
   first_name: {
     type: String,
     required: [true, "Please Enter first name"],
-    maxLength: [30, "Name Cannot exceed 30 characters"],
-    minLength: [1, "Name should have more than 1 characters"],
+    maxLength: [30, "First Name Cannot exceed 30 characters"],
+    minLength: [1, "First Name should have more than 1 characters"],
   },
 
   last_name: {
     type: String,
     required: [true, "Please Enter first name"],
-    maxLength: [30, "Name Cannot exceed 30 characters"],
-    minLength: [1, "Name should have more than 1 characters"],
+    maxLength: [30, "Last Name Cannot exceed 30 characters"],
+    minLength: [1, "Last Name should have more than 1 characters"],
   },
 
   email: {
@@ -29,8 +29,8 @@ const userSchema = new mongoose.Schema({
   Username: {
     type: String,
     required: [true, "Username Required"],
-    maxLength: [10, "Name Cannot exceed 10 characters"],
-    minLength: [8, "Name should have atleast 8 characters"],
+    maxLength: [30, "UserName Cannot exceed 10 characters"],
+    minLength: [1, "UserName should have atleast 8 characters"],
   },
 
   password: {
@@ -52,9 +52,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Registration id required"],
     minLength: [11, "reg id must have 11 char"],
+    maxLength: [11, "reg id must have 11 char only"],
     validate: {
       validator: function(v) {
-        return /^[ECI]{1}[K]{1}/.test(v);
+        return /^[ECI]2K[0-9]+$/.test(v);
       },
       message: props => `${props.value} Enter Valid Registeration I.D` 
     },

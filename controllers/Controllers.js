@@ -24,20 +24,20 @@ const registerUser=asyncHandler(async(req, res,next) => {
 //login
 const loginUser=asyncHandler(async(req,res,next)=>{
 
-    const {Username,password}=req.body;
-    if(!Username||!password){
+    const {email,password}=req.body;
+    if(!email||!password){
         return next(new ErrorHandler("All fields are manditory",400));
     }
-    const user =await User.findOne ({   Username     }).select("+password");
+    const user =await User.findOne ({   email     }).select("+password");
 
     if(!user){
-        return next(new ErrorHandler("Invalid Username or Password",400));
+        return next(new ErrorHandler("Invalid Email or Password",400));
     }
 
     const pass_match = await user.compare(password);
 
     if(!pass_match){
-        return next(new ErrorHandler("Invalid Username or Password",400));
+        return next(new ErrorHandler("Invalid Email or Password",400));
     }
     
     sendToken(user,201,res);

@@ -9,14 +9,14 @@ const sendEmail=async(options)=>{
         host: 'smtp-relay.brevo.com',
         port: 587,
         auth: {
-            user: 'mailpostg1010@gmail.com',
-            pass: 'IDR8UNOgGYFQv56y'
+            user: 'ctd23notifications@gmail.com',
+            pass: 'sbYfOXA8j2FycL4g'
         }
      });
  
      const mailOptions= {
          
-        from :'mailpostg1010@gmail.com',
+        from :'ctd23notifications@gmail.com',
         to:options.email,
         subject:options.subject,
         text:options.message,
