@@ -52,6 +52,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Registration id required"],
     minLength: [11, "reg id must have 11 char"],
+    validate: {
+      validator: function(v) {
+        return /^[ECI]{1}[K]{1}/.test(v);
+      },
+      message: props => `${props.value} Enter Valid Registeration I.D` 
+    },
   },
 
   isJunior: {

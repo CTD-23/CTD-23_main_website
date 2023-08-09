@@ -6,18 +6,27 @@ const TeamDwiz = require("../models/teamModelsDatawiz");
 const TeamNCC = require("../models/teamModelsNCC");
 const sendEmail = require('../utils/sendEmail');
 const {generateUsername,generatePassword}=require('../utils/automateCredentials');
+const jwt=require("jsonwebtoken");
 
 //Register for RC
 
 const registerIndiRC=asyncHandler(async(req,res,next)=>{
 
-    let newTeam;
+    // let newTeam;
   
-    const {email1}=req.body;
+    // const {email1}=req.body;
     
-    const user1=await User.findOne({email:req.body.email1});
+    // const user1=await User.findOne({email:email1});
     
     // check if the users are registered 
+
+    const {token} = req.cookies ; 
+    const secretKey = process.env.JWT_SECRET;
+    const decodedToken = jwt.verify(token, secretKey);
+    const userId = decodedToken.id ; 
+    const user1 = await User.findOne({_id:userId})
+    const email1 = user1.email ; 
+
     
     if(user1==null){
         return next(new ErrorHandler("user is not registered",404));
@@ -26,7 +35,7 @@ const registerIndiRC=asyncHandler(async(req,res,next)=>{
     
     // check if the individual user is registered in event 
     
-    const team_user1= await TeamRC.findOne({email1:req.body.email1});
+    const team_user1= await TeamRC.findOne({email1:email1});
     
     //generate username & password
      
@@ -58,7 +67,7 @@ const registerIndiRC=asyncHandler(async(req,res,next)=>{
     In case of any technical difficulties or questions reach out to us through`;
 
     try{
-        await sendEmail({email:req.body.email1, subject:`Credentials for RC` , message, });
+        await sendEmail({email:email1, subject:`Credentials for RC` , message, });
     }  
     catch(error){
         team_user1.username1 = undefined;
@@ -71,7 +80,7 @@ const registerIndiRC=asyncHandler(async(req,res,next)=>{
 
     res.status(200).json({
         success:true,
-        message:`team created successfully & mail sent to ${req.body.email1}`,
+        message:`team created successfully & mail sent to ${email1}`,
         newTeam
     })
 
@@ -87,13 +96,20 @@ const registerIndiRC=asyncHandler(async(req,res,next)=>{
 
 const registerIndiNCC=asyncHandler(async(req,res,next)=>{
 
-    let newTeam;
+    // let newTeam;
   
-    const {email1}=req.body;
+    // const {email1}=req.body;
     
-    const user1=await User.findOne({email:req.body.email1});
+    // const user1=await User.findOne({email:email1});
     
     // check if the users are registered 
+    const {token} = req.cookies ; 
+    const secretKey = process.env.JWT_SECRET;
+    const decodedToken = jwt.verify(token, secretKey);
+    const userId = decodedToken.id ; 
+    const user1 = await User.findOne({_id:userId})
+    const email1 = user1.email ; 
+    
     
     if(user1==null){
         return next(new ErrorHandler("user is not registered",404));
@@ -102,7 +118,7 @@ const registerIndiNCC=asyncHandler(async(req,res,next)=>{
     
     // check if the individual user is registered in event 
     
-    const team_user1= await TeamNCC.findOne({email1:req.body.email1});
+    const team_user1= await TeamNCC.findOne({email1:email1});
     
     //generate username & password
      
@@ -134,7 +150,7 @@ const registerIndiNCC=asyncHandler(async(req,res,next)=>{
     In case of any technical difficulties or questions reach out to us through`;
 
     try{
-        await sendEmail({email:req.body.email1, subject:`Credentials for NCC` , message, });
+        await sendEmail({email:email1, subject:`Credentials for NCC` , message, });
     }  
     catch(error){
         team_user1.username1 = undefined;
@@ -147,7 +163,7 @@ const registerIndiNCC=asyncHandler(async(req,res,next)=>{
 
     res.status(200).json({
         success:true,
-        message:`team created successfully & mail sent to ${req.body.email1}`,
+        message:`team created successfully & mail sent to ${email1}`,
         newTeam
     })
 
@@ -165,13 +181,19 @@ const registerIndiNCC=asyncHandler(async(req,res,next)=>{
 
 const registerIndiDatawiz=asyncHandler(async(req,res,next)=>{
 
-    let newTeam;
+    // let newTeam;
   
-    const {email1}=req.body;
+    // const {email1}=req.body;
     
-    const user1=await User.findOne({email:req.body.email1});
+    // const user1=await User.findOne({email:email1});
     
     // check if the users are registered 
+    const {token} = req.cookies ; 
+    const secretKey = process.env.JWT_SECRET;
+    const decodedToken = jwt.verify(token, secretKey);
+    const userId = decodedToken.id ; 
+    const user1 = await User.findOne({_id:userId})
+    const email1 = user1.email ; 
     
     if(user1==null){
         return next(new ErrorHandler("user is not registered",404));
@@ -180,7 +202,7 @@ const registerIndiDatawiz=asyncHandler(async(req,res,next)=>{
     
     // check if the individual user is registered in event 
     
-    const team_user1= await TeamDwiz.findOne({email1:req.body.email1});
+    const team_user1= await TeamDwiz.findOne({email1:email1});
     
     //generate username & password
      
@@ -212,7 +234,7 @@ const registerIndiDatawiz=asyncHandler(async(req,res,next)=>{
     In case of any technical difficulties or questions reach out to us through`;
 
     try{
-        await sendEmail({email:req.body.email1, subject:`Credentials for Datawiz` , message, });
+        await sendEmail({email:email1, subject:`Credentials for Datawiz` , message, });
     }  
     catch(error){
         team_user1.username1 = undefined;
@@ -225,7 +247,7 @@ const registerIndiDatawiz=asyncHandler(async(req,res,next)=>{
 
     res.status(200).json({
         success:true,
-        message:`team created successfully & mail sent to ${req.body.email1}`,
+        message:`team created successfully & mail sent to ${email1}`,
         newTeam
     });
 
