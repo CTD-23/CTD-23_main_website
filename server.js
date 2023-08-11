@@ -10,8 +10,14 @@ connectDB();
 
 
 //function to start server
-const server=app.listen(process.env.PORT,()=>{
-    console.log(`PORT running on http:://localhost:${process.env.PORT}`);
+// const server=app.listen(process.env.PORT,'0.0.0.0',()=>{
+//     console.log(`PORT running on http:://localhost:${process.env.PORT}`);
+// });
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`); 
 });
 
 // app.get("api/v1",(req,res)=>{
