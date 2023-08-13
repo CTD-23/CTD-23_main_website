@@ -17,7 +17,7 @@ router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/logout").get(logoutUser);
 router.route("/password/forget").post(forgetPassword);
-router.route("/password/reset/:token").put(resetPassword);
+router.route("/resetpassword/:token").put(resetPassword);
 
 //register teams @desc:private
 router.route("/register/team/RC").post(isAuthenticatedUser,registerTeamRC);

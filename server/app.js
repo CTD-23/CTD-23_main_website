@@ -10,7 +10,7 @@ const cors=require("cors");
 app.use(express.json());
 
 app.use(cors({
-    origin:["http://localhost:4000","https://gentle-cendol-c548cd.netlify.app"], 
+    origin:["https://gentle-cendol-c548cd.netlify.app","https://ctd.credenz.in","http://localhost:3000"], 
     credentials :true ,
 }));
 

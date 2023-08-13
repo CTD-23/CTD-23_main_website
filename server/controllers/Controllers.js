@@ -70,7 +70,7 @@ const forgetPassword = asyncHandler(async(req,res,next)=>{
 
     await user.save({validateBeforeSave:false});
 
-    const resetPasswordUrl =`${req.protocol}://${req.get("host")}/api/password/reset/${resetToken}`;
+    const resetPasswordUrl =`https://ctd.credenz.in/resetpassword/${resetToken}`;
 
     const message=`your reset password token is \n\n ${resetPasswordUrl} \n\n if not requested ignore `;
 
