@@ -38,20 +38,20 @@ const registerIndiRC=asyncHandler(async(req,res,next)=>{
     const team_user1= await TeamRC.findOne({email1:email1});
     
     //generate username & password
-     
-    const username1= generateUsername();
+     const username1 = user1.Username;
+    // const username1= generateUsername();
     const password1= generatePassword();
-
+    
     // if user not register for no events 
     if(team_user1==null){
-
-        
          newTeam= await TeamRC.create({
             email1,
             isRC:true,
             username1:username1,
             password1:password1,
         });
+        user1.isRC=true;
+        await user1.save();
     }
 
     
@@ -63,8 +63,8 @@ const registerIndiRC=asyncHandler(async(req,res,next)=>{
        
     const message=`Greetings from PICT IEEE Student Branch\n
     Thank you for registering in RC\n\n
-    Your login credentials for RC is username:${username1} & password:${password1}\n
-    In case of any technical difficulties or questions reach out to us through`;
+    Your login credentials for RC are :\n username : ${username1} \n password : ${password1}\n
+    In case of any technical difficulties or questions contact : \n 1) Harsh Khandelwal : +91 9529993590\n 2) Aayush Mohod : +91 8329465811`;
 
     try{
         await sendEmail({email:email1, subject:`Credentials for RC` , message, });
@@ -122,19 +122,20 @@ const registerIndiNCC=asyncHandler(async(req,res,next)=>{
     
     //generate username & password
      
-    const username1= generateUsername();
+    const username1 = user1.Username;
     const password1= generatePassword();
 
     // if user not register for no events 
     if(team_user1==null){
 
-        
          newTeam= await TeamNCC.create({
             email1,
             isNCC:true,
             username1:username1,
             password1:password1,
         });
+        user1.isNCC=true;
+        await user1.save();
     }
 
     
@@ -146,8 +147,8 @@ const registerIndiNCC=asyncHandler(async(req,res,next)=>{
        
     const message=`Greetings from PICT IEEE Student Branch\n
     Thank you for registering in NCC\n\n
-    Your login credentials for NCC is username:${username1} & password:${password1}\n
-    In case of any technical difficulties or questions reach out to us through`;
+    Your login credentials for NCC are :\n username : ${username1} \n password : ${password1}\n
+    In case of any technical difficulties or questions contact : \n 1) Sarthak Phadnis : +91 9930611330 \n 2) Prasad khatake : +91 8767039196`;
 
     try{
         await sendEmail({email:email1, subject:`Credentials for NCC` , message, });
@@ -212,13 +213,15 @@ const registerIndiDatawiz=asyncHandler(async(req,res,next)=>{
     // if user not register for no events 
     if(team_user1==null){
 
-        
          newTeam= await TeamDwiz.create({
             email1,
             isDatawiz:true,
             username1:username1,
             password1:password1,
         });
+        
+        user1.isDatawiz=true;
+        await user1.save();
     }
 
     
@@ -230,8 +233,7 @@ const registerIndiDatawiz=asyncHandler(async(req,res,next)=>{
        
     const message=`Greetings from PICT IEEE Student Branch\n
     Thank you for registering in Datawiz\n\n
-    Your login credentials for Datawiz is username:${username1} & password:${password1}\n
-    In case of any technical difficulties or questions reach out to us through`;
+    In case of any technical difficulties or questions contact : \n 1) Mangesh Salunke : +91 9001589696 \n 2) Prem Gaikwad : +919823392274`;
 
     try{
         await sendEmail({email:email1, subject:`Credentials for Datawiz` , message, });
@@ -253,5 +255,49 @@ const registerIndiDatawiz=asyncHandler(async(req,res,next)=>{
 
 });
 
+const verifyRC=asyncHandler(async(req,res,next)=>{
+    
+    const {username} =req.params;
+    const team=await TeamRC.findOne({username1:username});
+    if(team==null){
+        return next(new ErrorHandler('User not registred for the event',401));
+    }
+    const team_username=team.username1;
 
-module.exports={registerIndiRC,registerIndiDatawiz,registerIndiNCC};
+    const team_password=team.password1;
+    res.status(200).json({
+        success:true,
+        message:`${team.username1} Found`,
+        team_username,
+        team_password
+    });
+
+    
+
+
+});
+
+
+const verifyNCC=asyncHandler(async(req,res,next)=>{
+    
+    const {username} =req.params.username;
+    const team=await TeamNCC.findOne({username});
+    if(team==null){
+        return next(new ErrorHandler('User not registred for the event',401));
+    }
+    const team_username=team.username1;
+
+    const team_password=team.password1;
+    res.status(200).json({
+        success:true,
+        message:`${team.username1} Found`,
+        team_username,
+        team_password
+    });
+
+    
+
+
+});
+
+module.exports={registerIndiRC,registerIndiDatawiz,registerIndiNCC,verifyRC,verifyNCC};

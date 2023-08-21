@@ -5,7 +5,7 @@ const {registerTeamNCC} = require("../controllers/teamControllerNCC");
 const {registerTeamDatawiz}=require("../controllers/teamControllerDatawiz");
 
 
-const {registerIndiRC,registerIndiDatawiz,registerIndiNCC}=require("../controllers/individualController");
+const {registerIndiRC,registerIndiDatawiz,registerIndiNCC,verifyRC,verifyNCC}=require("../controllers/individualController");
 const {registerUser,loginUser,logoutUser,forgetPassword,resetPassword}=require("../controllers/Controllers");
 
 const {isAuthenticatedUser}=require("../middlewares/auth");
@@ -19,6 +19,10 @@ router.route("/logout").get(logoutUser);
 router.route("/password/forget").post(forgetPassword);
 router.route("/resetpassword/:token").put(resetPassword);
 
+//Verfying user for event RC , NCC
+router.route("/verify/RC/:username").get(verifyRC);
+router.route("/verify/NCC/:username").get(verifyNCC);
+
 //register teams @desc:private
 router.route("/register/team/RC").post(isAuthenticatedUser,registerTeamRC);
 router.route("/register/team/NCC").post(isAuthenticatedUser,registerTeamNCC);
@@ -26,6 +30,8 @@ router.route("/register/team/Datawiz").post(isAuthenticatedUser,registerTeamData
 router.route("/register/indi/RC").post(isAuthenticatedUser,registerIndiRC);
 router.route("/register/indi/NCC").post(isAuthenticatedUser,registerIndiNCC);
 router.route("/register/indi/Datawiz").post(isAuthenticatedUser,registerIndiDatawiz);
+
+
 
 
 module.exports=router;

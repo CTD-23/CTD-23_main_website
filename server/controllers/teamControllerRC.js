@@ -91,8 +91,8 @@ const registerTeamRC=asyncHandler(async(req,res,next)=>{
        
     let message=`Greetings from PICT IEEE Student Branch\n
     Thank you for registering in RC\n\n
-    Your login credentials for RC are \nusername:${username1}\npassword:${password1}\n
-    In case of any technical difficulties or questions reach out to us through`;
+    Your login credentials for RC are :\nusername:${username1}\npassword:${password1}\n
+    In case of any technical difficulties or questions contact Harsh Khandelwal : +91 9529993590,Aayush Mohod : +91 8329465811`;
 
     try{
         await sendEmail({email:req.body.email1, subject:`Credentials for RC` , message, });
@@ -110,8 +110,8 @@ const registerTeamRC=asyncHandler(async(req,res,next)=>{
 
      message=`Greetings from PICT IEEE Student Branch\n
      Thank you for registering in RC\n\n
-     Your login credentials for RC are \nusername:${username2}\npassword:${password2}\n
-     In case of any technical difficulties or questions reach out to us through`;
+     Your login credentials for RC are : \nusername:${username2}\npassword:${password2}\n
+     In case of any technical difficulties or questions contact Harsh Khandelwal : +91 9529993590,Aayush Mohod : +91 8329465811`;
 
     try{
         await sendEmail({email:req.body.email2, subject:`Credentials for RC` , message, });

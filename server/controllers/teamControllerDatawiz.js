@@ -88,8 +88,7 @@ const registerTeamDatawiz=asyncHandler(async(req,res,next)=>{
        
     let message=`Greetings from PICT IEEE Student Branch\n
     Thank you for registering in Datawiz\n\n
-    Your login credentials for Datawiz are \nusername:${username1}\npassword:${password1}\n
-    In case of any technical difficulties or questions reach out to us through`;
+    In case of any technical difficulties or questions contact Mangesh Salunke : +91 9001589696,Prem Gaikwad : +91 9823392274`
 
     try{
         await sendEmail({email:req.body.email1, subject:`Credentials for Datawiz` , message, });
@@ -107,8 +106,7 @@ const registerTeamDatawiz=asyncHandler(async(req,res,next)=>{
 
      message=`Greetings from PICT IEEE Student Branch\n
      Thank you for registering in Datawiz\n\n
-     Your login credentials for Datawiz are \nusername:${username2}\npassword:${password2}\n
-     In case of any technical difficulties or questions reach out to us through`;
+     In case of any technical difficulties or questions contact Mangesh Salunke : +91 9001589696,Prem Gaikwad : +91 9823392274`
 
     try{
         await sendEmail({email:req.body.email2, subject:`Credentials for NCC` , message, });

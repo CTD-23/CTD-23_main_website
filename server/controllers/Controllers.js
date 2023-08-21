@@ -11,7 +11,7 @@ const registerUser=asyncHandler(async(req, res,next) => {
     const {email,first_name,last_name,password,Username,isJunior,reg_id}=req.body;
 
     if(!email||!first_name||!last_name||!password||!Username||!isJunior||!reg_id){
-        return next(new ErrorHandler("All fields are manditory",400));
+        return next(new ErrorHandler("All fields are mandatory",400));
     }
 
     const user=await User.create({
@@ -26,7 +26,7 @@ const loginUser=asyncHandler(async(req,res,next)=>{
 
     const {email,password}=req.body;
     if(!email||!password){
-        return next(new ErrorHandler("All fields are manditory",400));
+        return next(new ErrorHandler("All fields are mandatory",400));
     }
     const user =await User.findOne ({   email     }).select("+password");
 
@@ -49,12 +49,16 @@ const logoutUser = asyncHandler(async(req,res,next)=>{
      res.cookie("token",null,{
         expires:new Date(Date.now()),
         httpOnly:true,
+        sameSite : 'None',
+        secure : true,
     });
     
     res.status(200).json({
         success:true,
         message:"Logged out",
     });
+
+    
     
 });
 
@@ -116,7 +120,7 @@ const resetPassword=asyncHandler(async(req,res,next)=>{
     }
 
     if(req.body.password!==req.body.confirmPassword){
-        return next(new ErrorHandler("Password and confirm Password dont match",404));
+        return next(new ErrorHandler("Password and confirm Password don't match",404));
     }
 
     user.password=req.body.password;
@@ -128,6 +132,7 @@ const resetPassword=asyncHandler(async(req,res,next)=>{
     sendToken(user,200,res);
 
 });
+
 
 
 module.exports={registerUser , loginUser,logoutUser,forgetPassword,resetPassword}
